@@ -5,7 +5,7 @@ self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.a
 self.addEventListener("fetch",e=>{
   const u=new URL(e.request.url);
   if(e.request.method!=="GET")return;
-  const cacheable=u.origin===location.origin||u.host==="unpkg.com"||u.host==="www.gstatic.com"||u.host.endsWith("cartocdn.com");
+  const cacheable=u.origin===location.origin||u.host==="unpkg.com"||u.host==="www.gstatic.com"||u.host.endsWith("openstreetmap.org");
   if(!cacheable)return;
   e.respondWith(fetch(e.request).then(r=>{const cp=r.clone();caches.open(C).then(c=>c.put(e.request,cp));return r}).catch(()=>caches.match(e.request)));
 });

@@ -100,6 +100,7 @@ textarea.in{min-height:76px;resize:vertical}
 .pin{filter:drop-shadow(0 3px 3px rgba(0,0,0,.35))}
 .me{width:18px;height:18px;border-radius:50%;background:#2563eb;border:3px solid #fff;box-shadow:0 0 0 6px rgba(37,99,235,.25)}
 .leaflet-control-zoom{display:none}
+@media (prefers-color-scheme:dark){.leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.88) saturate(.8)}}
 .leaflet-control-attribution{font-size:10px;margin-bottom:60px!important}
 </style>
 </head>
@@ -190,9 +191,7 @@ firebase.auth().onAuthStateChanged(u=>{
 const BCN=[41.3995,2.2060];
 const map=L.map("map",{zoomControl:false,center:BCN,zoom:15,attributionControl:true});
 const dark=matchMedia("(prefers-color-scheme: dark)");
-const tileUrl=()=>`https://{s}.basemaps.cartocdn.com/rastertiles/${dark.matches?"dark_all":"voyager"}/{z}/{x}/{y}{r}.png`;
-let tiles=L.tileLayer(tileUrl(),{maxZoom:19,subdomains:"abcd",attribution:"© OpenStreetMap, © CARTO"}).addTo(map);
-dark.addEventListener?.("change",()=>tiles.setUrl(tileUrl()));
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(map);
 let meMarker=null,first=true;
 function startGps(){
   if(!navigator.geolocation)return;
